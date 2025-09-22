@@ -2,6 +2,7 @@ package cis3334.java_heartrate_start;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
@@ -12,11 +13,16 @@ public class MainViewModel extends AndroidViewModel {
 
     private LiveData<List<Heartrate>> heartrateList;
 
-    public MainViewModel (Application application) {
+    public MainViewModel(@NonNull Application application) {
         super(application);
-        heartrateRepository = new HeartrateRepository(application);
-        heartrateList = heartrateRepository.getAll();
+        try {
+            heartrateRepository = new HeartrateRepository(application);
+            heartrateList = heartrateRepository.getAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     public void insert(Integer heartrate, Integer age) {
         Heartrate hr = new Heartrate(heartrate, age);

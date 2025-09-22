@@ -6,76 +6,81 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- Title -->
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Add a Heartrate"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Pulse Label -->
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="Pulse:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextPulse" />
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Pulse Input -->
+    <EditText
+        android:id="@+id/editTextPulse"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintStart_toEndOf="@id/textView2" />
+
+    <!-- Age Label -->
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="Age:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextAge" />
+        app:layout_constraintTop_toBottomOf="@id/editTextPulse"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextPulse"
-        android:layout_width="129dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
+    <!-- Age Input -->
     <EditText
         android:id="@+id/editTextAge"
-        android:layout_width="129dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/editTextPulse"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPulse" />
+        app:layout_constraintTop_toBottomOf="@id/editTextPulse"
+        app:layout_constraintStart_toEndOf="@id/textView3" />
 
+    <!-- Insert Button -->
     <Button
         android:id="@+id/buttonInsert"
-        android:layout_width="114dp"
-        android:layout_height="91dp"
-        android:text="Insert"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextPulse"
-        app:layout_constraintTop_toTopOf="@+id/editTextPulse" />
-
-    <EditText
-        android:id="@+id/editTextDisplay"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Insert"
+        app:layout_constraintStart_toEndOf="@id/editTextAge"
+        app:layout_constraintTop_toTopOf="@id/editTextAge" />
+
+    <!-- RecyclerView for Heartrate Entries -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewHeartrate"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/buttonInsert"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextAge" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/heartrate_row" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

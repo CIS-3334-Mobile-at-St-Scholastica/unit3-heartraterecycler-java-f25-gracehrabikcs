@@ -1,8 +1,11 @@
 package cis3334.java_heartrate_start;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,10 +19,11 @@ public class MainActivity extends AppCompatActivity {
 
     EditText editTextPulse;
     EditText editTextAge;
-    EditText editTextDisplay;           // used to display the heart rates from the databas
-    // TODO: In Unit 5 will will replace the editText with a RecycleView
+    EditText editTextDisplay;   // still here but optional once RecyclerView is in place
     Button buttonInsert;
     MainViewModel mainViewModel;
+    private RecyclerView recyclerViewHeartrate;
+    private HeartrateAdapter heartrateAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,22 +32,33 @@ public class MainActivity extends AppCompatActivity {
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
+        // EditText fields
         editTextAge = findViewById(R.id.editTextAge);
         editTextPulse = findViewById(R.id.editTextPulse);
-        editTextDisplay = findViewById(R.id.editTextDisplay);
+        //editTextDisplay = findViewById(R.id.editTextDisplay);
 
-        setupInsertButton();            // Set up the OnClickListener for the insert button
+        // RecyclerView setup
+        recyclerViewHeartrate = findViewById(R.id.recyclerViewHeartrate);
+        heartrateAdapter = new HeartrateAdapter(getApplication(), mainViewModel);
+        recyclerViewHeartrate.setAdapter(heartrateAdapter);
+        recyclerViewHeartrate.setLayoutManager(new LinearLayoutManager(this));
+
+        setupInsertButton();
         setupLiveDataObserver();
     }
 
     private void setupLiveDataObserver() {
-        // Create the observer for the list of heart rates
         mainViewModel.getAllHeartrates().observe(this, new Observer<List<Heartrate>>() {
             @Override
             public void onChanged(@Nullable List<Heartrate> allHeartrates) {
-                Log.d("CIS 3334", "MainActivity -- LiveData Observer -- Number of Pizzas = "+allHeartrates.size());
-                editTextDisplay.setText("Number of heartrates = "+allHeartrates.size());
-                // TODO: update the RecycleView Array Adapter
+                Log.d("CIS 3334", "MainActivity -- LiveData Observer -- Number of Heartrates = " + allHeartrates.size());
+
+                // optional: still show count in the editText
+                editTextDisplay.setText("Number of heartrates = " + allHeartrates.size());
+
+                // Update RecyclerView list
+                heartrateAdapter.setHeartrateList(allHeartrates);
+                heartrateAdapter.notifyDataSetChanged();
             }
         });
     }
